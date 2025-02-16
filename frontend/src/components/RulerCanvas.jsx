@@ -4,7 +4,7 @@ import { Canvas, Rect } from "fabric";
 import { SquareIcon } from "sebikostudio-icons";
 // import "../styles.scss";
 
-const RulerCanvas = ({ onRulerUpdate }) => {
+const RulerCanvas = ({ onRulerUpdate, image }) => {
   const canvasRef = useRef(null);
   const [fabricCanvas, setFabricCanvas] = useState(null);
 
@@ -12,8 +12,8 @@ const RulerCanvas = ({ onRulerUpdate }) => {
     // Initialize Fabric.js Canvas
     if (canvasRef.current) {
       const initCanvas = new Canvas(canvasRef.current, {
-        width: 500,
-        height: 500,
+        width: image.width,
+        height: image.height,
         backgroundColor: "transparent",
       });
 

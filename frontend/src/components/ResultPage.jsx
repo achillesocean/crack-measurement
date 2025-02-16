@@ -25,6 +25,7 @@ export default function ResultPage() {
     console.log("Path is provided", imageUrl);
 
     const img = new Image();
+    img.crossOrigin = "anonymous";
     img.onload = () => {
       console.log("Image loaded");
       setImage(img);
@@ -49,6 +50,19 @@ export default function ResultPage() {
       processImage();
     }
   }, [rulerData, imageUrl]);
+
+  useEffect(() => {
+    if (!image) return;
+
+    console.log("Re-drawing image on canvas");
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = image.width;
+    canvas.height = image.height;
+    ctx.drawImage(image, 0, 0);
+  }, [image]); // Runs whenever `image` updates
 
   const handleRulerUpdate = (newData) => {
     // console.log(`Ruler updated: ${JSON.stringify(newData)}`);
@@ -89,7 +103,10 @@ export default function ResultPage() {
       const g = pixels[index + 1];
       const b = pixels[index + 2];
 
-      if (r === 255 && g === 255 && b === 255) {
+      // if (r === 255 && g === 255 && b === 255) {
+      //   count++;
+      // }
+      if (r >= 100 && g >= 100 && b >= 100) {
         count++;
       }
 
@@ -112,16 +129,20 @@ export default function ResultPage() {
     <div className="flex flex-col items-center">
       <h2 className="text-xl font-semibold mb-4">Processed Image</h2>
       <div className="relative max-w-md">
-        {imageUrl ? (
+        {image ? (
           <>
             <canvas
               ref={canvasRef}
               className="w-full border border-gray-300 z-10"
             />
             <RulerCanvas
+              image={image}
               onRulerUpdate={handleRulerUpdate}
               className="absolute top-0 left-0 w-full h-full z-20"
             />
+            <p>
+              Image dimensions: {image.width} x {image.height}
+            </p>
           </>
         ) : (
           <p className="text-red-500">No image available.</p>

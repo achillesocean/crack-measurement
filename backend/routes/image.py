@@ -24,4 +24,4 @@ async def upload_image(file: UploadFile = File(...)):
   # process image
   processed_img_path = process_image(file_path) # filepath looks like static/uploads/uuid.png
 
-  return {"processed_image_url": f"http://127.0.0.1:8000/static/processed_images/{processed_img_path.name}"}
+  return {"processed_image_url": f"http://127.0.0.1:8000/processed_images/{processed_img_path.name}"}

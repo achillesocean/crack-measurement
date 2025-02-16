@@ -1,7 +1,7 @@
 # entry point for FastAPI
 
 from fastapi import FastAPI
-from routes import image
+from routes import image, get_processed_images
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -24,6 +24,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # inlcude routes
 app.include_router(image.router)
+app.include_router(get_processed_images.router)
 
 @app.get("/")
 def root():
