@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import RulerCanvas from "./RulerCanvas";
+import { AngleIcon } from "sebikostudio-icons";
 export default function ResultPage() {
   const [rulerData, setRulerData] = useState({
     x: 100,
@@ -39,8 +40,8 @@ export default function ResultPage() {
       if (!canvas) return;
       const ctx = canvas.getContext("2d");
 
-      canvas.width = img.width;
-      canvas.height = img.height; // why are we using img and not image?
+      // canvas.width = img.width;
+      // canvas.height = img.height; // why are we using img and not image?
       ctx.drawImage(img, 0, 0);
     }
   }, [imageUrl]);
@@ -59,8 +60,8 @@ export default function ResultPage() {
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
 
-    canvas.width = image.width;
-    canvas.height = image.height;
+    // canvas.width = image.width;
+    // canvas.height = image.height;
     ctx.drawImage(image, 0, 0);
   }, [image]); // Runs whenever `image` updates
 
@@ -82,8 +83,9 @@ export default function ResultPage() {
     // calculate the ruler's endpoits
     const x1 = Math.round(rulerData.x);
     const y1 = Math.round(rulerData.y);
-    const x2 = Math.round(x1 + rulerData.width * Math.cos(rulerData.angle));
-    const y2 = Math.round(y1 + rulerData.width * Math.sin(rulerData.angle));
+    const angleRadians = rulerData.angle * (Math.PI / 180);
+    const x2 = Math.round(x1 + rulerData.width * Math.cos(angleRadians));
+    const y2 = Math.round(y1 + rulerData.width * Math.sin(angleRadians));
 
     console.log(`Ruler endpoints: (${x1}, ${y1}) -->(${x2}, ${y2})`);
 
@@ -128,18 +130,22 @@ export default function ResultPage() {
   return (
     <div className="flex flex-col items-center">
       <h2 className="text-xl font-semibold mb-4">Processed Image</h2>
-      <div className="relative max-w-md">
+      <div className="relative ">
         {image ? (
           <>
             <canvas
+              width={image.width}
+              height={image.height}
               ref={canvasRef}
-              className="w-full border border-gray-300 z-10"
+              className="  w-full border border-gray-300 z-10 width-full h-full"
             />
+            {/* <img src={imageUrl} alt="Processed Image" /> */}
             <RulerCanvas
               image={image}
               onRulerUpdate={handleRulerUpdate}
               className="absolute top-0 left-0 w-full h-full z-20"
             />
+
             <p>
               Image dimensions: {image.width} x {image.height}
             </p>

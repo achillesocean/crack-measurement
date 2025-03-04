@@ -45,7 +45,7 @@ const RulerCanvas = ({ onRulerUpdate, image }) => {
 
       // Listen for modifications (position, angle)
       ruler.on("modified", () => {
-        console.log(`Ruler modified: ${JSON.stringify(ruler.toJSON())}`);
+        // console.log(`Ruler modified: ${JSON.stringify(ruler.toJSON())}`);
         onRulerUpdate({
           x: ruler.left,
           y: ruler.top,
