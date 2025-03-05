@@ -5,7 +5,7 @@ router = APIRouter()
 
 # Serve processed images with CORS headers
 @router.get("/processed_images/{image_name}")
-async def get_processed_image(image_name: str, request: Request):
+async def get_processed_image(image_name: str, request: Request): # does this syntax actually typecase? for example, image_name should be a string or does it typecast? 
     image_path = Path(f"static/processed_images/{image_name}")
 
     if not image_path.exists():

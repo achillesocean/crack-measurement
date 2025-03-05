@@ -19,9 +19,9 @@ async def upload_image(file: UploadFile = File(...)):
   file_path = UPLOAD_DIR / file_name
 
   with file_path.open("wb") as buffer:
-    shutil.copyfileobj(file.file, buffer)
+    shutil.copyfileobj(file.file, buffer) # copies the file into UPLOAD_DIR
 
   # process image
   processed_img_path = process_image(file_path) # filepath looks like static/uploads/uuid.png
-
+  # the returned path is of the image in static/processed_images or the PROCESSED_DIR
   return {"processed_image_url": f"http://127.0.0.1:8000/processed_images/{processed_img_path.name}"}

@@ -130,7 +130,7 @@ export default function ResultPage() {
   return (
     <div className="flex flex-col items-center">
       <h2 className="text-xl font-semibold mb-4">Processed Image</h2>
-      <div className="relative ">
+      <div className="relative mb-2">
         {image ? (
           <>
             <canvas
@@ -140,20 +140,20 @@ export default function ResultPage() {
               className="  w-full border border-gray-300 z-10 width-full h-full"
             />
             {/* <img src={imageUrl} alt="Processed Image" /> */}
+            {/* {console.log("Above ruler canvas")} */}
             <RulerCanvas
               image={image}
               onRulerUpdate={handleRulerUpdate}
               className="absolute top-0 left-0 w-full h-full z-20"
             />
-
-            <p>
-              Image dimensions: {image.width} x {image.height}
-            </p>
           </>
         ) : (
           <p className="text-red-500">No image available.</p>
         )}
       </div>
+      {/* <p>
+        Image dimensions: {image.width} x {image.height}
+      </p> */}
       <p>
         Ruler Position: X: {rulerData.x}, Y: {rulerData.y}
       </p>

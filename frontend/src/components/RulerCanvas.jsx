@@ -4,6 +4,7 @@ import { Canvas, Rect } from "fabric";
 import { SquareIcon } from "sebikostudio-icons";
 // import "../styles.scss";
 
+//update the position/css of the button.
 const RulerCanvas = ({ onRulerUpdate, image }) => {
   const canvasRef = useRef(null);
   const [fabricCanvas, setFabricCanvas] = useState(null);
@@ -30,8 +31,8 @@ const RulerCanvas = ({ onRulerUpdate, image }) => {
     if (fabricCanvas) {
       // Create a movable & rotatable ruler
       const ruler = new Rect({
-        left: 100,
-        top: 200,
+        left: 0,
+        top: 0,
         width: 200,
         height: 20,
         fill: "transparent",
@@ -55,34 +56,20 @@ const RulerCanvas = ({ onRulerUpdate, image }) => {
         });
       });
       fabricCanvas.add(ruler);
+      console.log("Ruler Added!");
     }
   };
 
   return (
-    <div className="absolute top-0 left-0 w-full h-full ">
-      <div
-        style={{
-          // display: "flex",
-          // gap: "8px",
-          // flexDirection: "column",
-          padding: "8px 8px",
-          borderRadius: "8px",
-          position: "fixed",
-          top: "50%",
-          transform: "translateY(-50%)",
-          // left: "16px",
-        }}
-        className="absolute right-4 transform bg-gray-800 p-2 rounded shadow-lg"
+    <div className="absolute top-0 left-0 w-full h-full flex flex-row gap-3 items-center">
+      <canvas id="canvasRuler" ref={canvasRef} className="w-full h-full" />
+      <button
+        style={{ cursor: "pointer" }}
+        onClick={addRuler}
+        className="mt-4 p-2 bg-gray-600 text-white rounded hover:bg-gray-500"
       >
-        <button
-          style={{ cursor: "pointer" }}
-          onClick={addRuler}
-          className="p-2 bg-gray-600 text-white rounded hover:bg-gray-500 z-20"
-        >
-          <SquareIcon className="w-6 h-6" />
-        </button>
-      </div>
-      <canvas id="canvas" ref={canvasRef} className="w-full h-full" />
+        Add Ruler
+      </button>
     </div>
   );
 };
