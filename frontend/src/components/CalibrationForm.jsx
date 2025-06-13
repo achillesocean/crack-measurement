@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useScaleFactor } from "../context/ScaleFactorContext";
 import RulerCanvas from "./RulerCanvas";
 import milliRuler from "../assets/milliRuler.jpg";
@@ -12,11 +12,12 @@ export default function CalibrationForm() {
   const [rulerWidth, setRulerWidth] = useState(0);
 
   const canvasRef = useRef(null);
-  const location = useLocation();
+  // const location = useLocation();
   // const imageUrl = new URLSearchParams(location.search).get("image");
   const imageUrl = milliRuler;
   // imageUrl should be a given here. but where do we store the image? do we store it inside the backend's static folder?
   const [image, setImage] = useState(null);
+  const navigate = useNavigate();
 
   // add the form. just two inputs, one scale-factor display. we just need to hold on to the scale-factor state. the way it works is you make sure the pixel ruler spans the ruler in the image.
 
@@ -66,6 +67,10 @@ export default function CalibrationForm() {
     ctx.drawImage(image, 0, 0);
   }, [image]); // Runs whenever `image` updates
 
+  useEffect(() => {
+    handleCalibration();
+  }, [rulerWidth, realWorldLength]);
+
   const handleRulerUpdate = ({ width }) => {
     setRulerWidth(width);
   };
@@ -76,6 +81,7 @@ export default function CalibrationForm() {
       setScaleFactor(newScaleFactor);
       // scale factor shouldn't update like this, but there should be a form for the user to input how much of the real-world ruler in the image that the pixel ruler spans, then submits for scale factor calculation.
       console.log("Scale factor set: ", newScaleFactor);
+      // navigate("/upload");
     }
   };
 
@@ -121,7 +127,7 @@ export default function CalibrationForm() {
 
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={handleCalibration}
+        onClick={() => navigate("/upload")}
       >
         Set Scale Factor
       </button>

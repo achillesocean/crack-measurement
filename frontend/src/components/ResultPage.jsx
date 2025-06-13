@@ -2,6 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import RulerCanvas from "./RulerCanvas";
 import { AngleIcon } from "sebikostudio-icons";
+import { useScaleFactor } from "../context/ScaleFactorContext";
 export default function ResultPage() {
   const [rulerData, setRulerData] = useState({
     x: 100,
@@ -15,6 +16,7 @@ export default function ResultPage() {
   const location = useLocation();
   const imageUrl = new URLSearchParams(location.search).get("image");
   const [image, setImage] = useState(null);
+  const { scaleFactor, setScaleFactor } = useScaleFactor();
 
   useEffect(() => {
     console.log("About to load image");
@@ -160,6 +162,7 @@ export default function ResultPage() {
       <p>Angle: {rulerData.angle}°</p>
       <p>Width: {rulerData.width}px</p>
       <h3>White Pixels Count: {pixelCount}</h3>
+      <h3>Length in mm: {pixelCount * scaleFactor}</h3>
     </div>
   );
 }

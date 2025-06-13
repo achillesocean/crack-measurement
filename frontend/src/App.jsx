@@ -9,8 +9,8 @@ export default function App() {
       <Router>
         <div className="flex justify-center items-center min-h-screen bg-gray-100">
           <Routes>
-            <Route path="/calibrate" element={<CalibrationForm />} />
-            <Route path="/" element={<UploadForm />} />
+            <Route path="/" element={<CalibrationForm />} />
+            <Route path="/upload" element={<UploadForm />} />
             <Route path="/result" element={<ResultPage />} />
           </Routes>
         </div>
